@@ -16,7 +16,7 @@
     // we can setup the socket_id param.
     if (channel.pusher.connection) {
       channel.pusher.connection.bind('connected', function() {
-        Backbone.pusher_socket_id = channel.pusher.socket_id;
+        Backbone.pusher_socket_id = channel.pusher.connection.socket_id;
       });
     } else {
       channel.pusher.bind('pusher:connection_established', function() {
@@ -102,7 +102,8 @@
 
   // Backpusher's Backbone.sync method:
   // -------------
-  Backbone.sync = function(method, model, success, error) {
+  Backbone.sync = function(method, model, options) {
+    
     var type = methodMap[method];
     var modelJSON = null;
 
@@ -111,23 +112,29 @@
     }
 
     if (!(model && model.url)) {
-      throw new Error("A 'url' property or function must be specified");
+      urlError();
     }
 
     var modelUrl = _.isFunction(model.url) ? model.url() : model.url;
     modelUrl += '?socket_id=' + Backbone.pusher_socket_id;
 
     // Default JSON-request options.
-    var params = {
+    var params = _.extend({
       url:          modelUrl,
       type:         type,
-      contentType:  'application/json',
-      data:         modelJSON,
-      dataType:     'json',
-      processData:  false,
-      success:      success,
-      error:        error
-    };
+      dataType:     'json'
+    }, options);
+    
+    // Ensure that we have the appropriate request data.
+    if (!params.data && model && (method == 'create' || method == 'update')) {
+      params.contentType = 'application/json';
+      params.data = JSON.stringify(model.toJSON());
+    }
+    
+    // Don't process data on a non-GET request.
+    if (params.type !== 'GET' && !Backbone.emulateJSON) {
+      params.processData = false;
+    }
 
     // For older servers, emulate JSON by encoding the request into an HTML-form.
     if (Backbone.emulateJSON) {
