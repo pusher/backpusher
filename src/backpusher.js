@@ -14,7 +14,7 @@
 
     // Bind for the connection established, so
     // we can setup the socket_id param.
-    if (channel.pusher.connection) {
+    if (channel.pusher.connection.state === 'connected') {
       if(channel.pusher.connection.socket_id) {
         Backbone.pusher_socket_id = channel.pusher.connection.socket_id;
       } else {
