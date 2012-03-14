@@ -102,7 +102,9 @@
 
   // Add socket ID to every jquery AJAX request
   $.ajaxPrefilter(function(options, originalOptions, xhr) {
-    xhr.setRequestHeader("X-Pusher-Socket-ID", Backbone.pusher_socket_id);
+    if (!options.crossDomain) {
+      xhr.setRequestHeader("X-Pusher-Socket-ID", Backbone.pusher_socket_id);
+    }
   });
 
   // Export:
