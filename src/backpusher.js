@@ -100,12 +100,16 @@
     'read'  : 'GET'
   };
 
-  // Add socket ID to every jquery AJAX request
-  $.ajaxPrefilter(function(options, originalOptions, xhr) {
-    if (!options.crossDomain) {
-      xhr.setRequestHeader("X-Pusher-Socket-ID", Backbone.pusher_socket_id);
-    }
-  });
+  // Add socket ID to every Backbone.sync request
+  var origBackboneSync = Backbone.sync;
+  Backbone.sync = function(method, model, options) {
+    options.headers = _.extend(
+      { 'X-Pusher-Socket-ID': Backbone.pusher_socket_id },
+      options.headers
+    );
+
+    origBackboneSync(method, model, options);
+  };
 
   // Export:
   exports.Backpusher = Backpusher;
