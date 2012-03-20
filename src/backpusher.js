@@ -108,7 +108,7 @@
       options.headers
     );
 
-    origBackboneSync(method, model, options);
+    return origBackboneSync(method, model, options);
   };
 
   // Export:
