@@ -1,5 +1,5 @@
-//     Backpusher.js 0.0.1
-//     (c) 2011 Pusher.
+//     Backpusher.js 0.0.2
+//     (c) 2011-2012 Pusher.
 //     Backpusher may be freely distributed under the MIT license.
 //     For all details and documentation:
 //     http://github.com/pusher/backpusher
