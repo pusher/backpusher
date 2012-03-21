@@ -92,14 +92,6 @@
     }
   };
 
-  // Map from CRUD to HTTP for our default `Backbone.sync` implementation.
-  var methodMap = {
-    'create': 'POST',
-    'update': 'PUT',
-    'delete': 'DELETE',
-    'read'  : 'GET'
-  };
-
   // Add socket ID to every Backbone.sync request
   var origBackboneSync = Backbone.sync;
   Backbone.sync = function(method, model, options) {
