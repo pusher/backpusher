@@ -1,10 +1,22 @@
-//     Backpusher.js 0.0.2
+//     Backpusher.js 0.0.3
 //     (c) 2011-2012 Pusher.
+//     (c) 2014 Koen Punt (koen@fetch.nl).
 //     Backpusher may be freely distributed under the MIT license.
 //     For all details and documentation:
 //     http://github.com/pusher/backpusher
 
-;(function(exports, undefined){
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(['backbone'], factory);
+  } else if (typeof exports === 'object') {
+    // CommonJS
+    module.exports = factory(require('backbone'));
+  } else {
+    // Browser globals
+    root.Backpusher = factory(root.Backbone);
+  }
+})(this, function(Backbone, undefined){
   // The top-level namespace. All public Backbone classes and modules will
   // be attached to this. Exported for both CommonJS and the browser.
   var Backpusher = function(channel, collection, options) {
@@ -103,6 +115,6 @@
     return origBackboneSync(method, model, options);
   };
 
-  // Export:
-  exports.Backpusher = Backpusher;
-})((typeof exports !== 'undefined' ? exports : this));
+  return Backpusher;
+
+});
