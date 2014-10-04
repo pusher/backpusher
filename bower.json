@@ -1,0 +1,28 @@
+{
+  "name": "backpusher",
+  "version": "0.0.3",
+  "homepage": "https://github.com/fetch/backpusher",
+  "authors": [
+    "Koen Punt <koen@fetch.nl>"
+  ],
+  "description": "Backpusher is a library for using Pusher to sync your Backbone models between clients, the server and other clients.",
+  "main": "src/backpusher.js",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "keywords": [
+    "pusher",
+    "backbone",
+    "push",
+    "realtime"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
